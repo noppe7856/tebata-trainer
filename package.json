@@ -1,0 +1,14 @@
+{
+  "name": "tebata-trainer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Three.js Boy Scout Japanese Semaphore (手旗信号) 3D Training App",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.187.0"
+  }
+}

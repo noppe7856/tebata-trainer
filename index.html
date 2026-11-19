@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>手旗信号 3D トレーナー | ボーイスカウト向け</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="canvas-container"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+      <div class="top-group">
+        <div class="brand">
+          <div class="brand-emblem">⚜</div>
+          <div>
+            <div class="brand-title">手旗信号 3D トレーナー</div>
+            <div class="brand-sub">Boy Scout Semaphore Studio</div>
+          </div>
+        </div>
+
+        <nav class="mode-tabs" aria-label="アプリモード">
+          <button class="mode-tab active" data-mode="quiz">🎯 自動トレーニング</button>
+          <button class="mode-tab" data-mode="teach">📖 教えるモード</button>
+          <button class="mode-tab" data-mode="free">🚩 自由送信</button>
+        </nav>
+      </div>
+
+      <div class="top-group tool-pills">
+        <button class="pill-btn active" data-cam="receiver" title="相手から見る標準の受信視点">正面(受信)</button>
+        <button class="pill-btn" data-cam="sender" title="自分の背中側から見る送信視点">背面(送信)</button>
+        <button class="pill-btn" data-cam="angle" title="腕の交差や奥行きがわかる斜め視点">斜め3D</button>
+        <span style="width:1px;height:18px;background:rgba(0,0,0,0.1);margin:0 2px;"></span>
+        <button class="pill-btn active" id="toggle-trail">軌跡 ON</button>
+        <button class="pill-btn" id="toggle-guide">角度ガイド OFF</button>
+        <button class="pill-btn" id="toggle-hat">帽子: ベレー</button>
+        <button class="pill-btn" id="toggle-sound">音 OFF</button>
+      </div>
+    </header>
+
+    <!-- Live Stage HUD -->
+    <aside class="stage-hud" aria-live="polite">
+      <div class="hud-card">
+        <div class="hud-pose-row">
+          <span class="hud-dot" id="hud-dot"></span>
+          <span class="hud-pose-label" id="hud-pose-label">待機中（原姿）</span>
+        </div>
+        <div class="hud-sub" id="hud-sub-label">問題を開始すると自動で信号を送ります</div>
+      </div>
+
+      <div class="legend-pill" id="perspective-legend">
+        <span class="flag-chip"><span class="swatch-red"></span>右手＝赤旗</span>
+        <span class="flag-chip"><span class="swatch-white"></span>左手＝白旗</span>
+        <span id="view-note">（正面＝受信視点）</span>
+      </div>
+    </aside>
+
+    <!-- Bottom Speed & Playback Control Dock -->
+    <section class="speed-dock" aria-label="スピードと再生操作">
+      <div class="speed-header">
+        <div class="speed-readout">
+          <span class="speed-val" id="speed-val-label">55 字/分</span>
+          <span class="speed-rank" id="speed-rank-label">標準（1級目安）</span>
+          <span class="speed-sec" id="speed-sec-label">約1.09秒/字</span>
+        </div>
+        <div class="playback-row">
+          <button class="play-btn" id="btn-play-pause">⏸ 一時停止</button>
+          <button class="btn-secondary" id="btn-replay">↺ もう一度</button>
+          <button class="pill-btn" id="btn-slowmo" title="0.5倍速でじっくり再生">0.5xスロー</button>
+        </div>
+      </div>
+
+      <div class="speed-slider-row">
+        <span style="font-size:11px;font-weight:800;color:#64748b;">10</span>
+        <input
+          type="range"
+          id="speed-slider"
+          class="speed-slider"
+          min="10"
+          max="400"
+          step="5"
+          value="55"
+          aria-label="送信スピード（毎分文字数）"
+        />
+        <span style="font-size:11px;font-weight:800;color:#dc2626;">400</span>
+      </div>
+
+      <div class="speed-presets">
+        <button class="preset-btn" data-cpm="15">🐢 激遅 15</button>
+        <button class="preset-btn" data-cpm="30">🌱 初級 30</button>
+        <button class="preset-btn active" data-cpm="55">⛺ 標準 55</button>
+        <button class="preset-btn" data-cpm="90">⚡ 高速 90</button>
+        <button class="preset-btn hyper" data-cpm="150">🔥 爆速 150</button>
+        <button class="preset-btn hyper" data-cpm="240">🚀 鬼速 240</button>
+        <button class="preset-btn hyper" data-cpm="360">⚡神速 360</button>
+      </div>
+    </section>
+
+    <!-- Right Interactive Panel -->
+    <aside class="side-panel" id="side-panel">
+      <div class="panel-scroll" id="panel-content">
+        <!-- Populated dynamically by main.js -->
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
